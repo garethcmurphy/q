@@ -1,7 +1,11 @@
-"""qauntim lattice
- gas 1d simulation"""
+"""
+quantum lattice
+gas 1d simulation
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
+
 
 class QuantumLatticeGas1D:
     """
@@ -26,7 +30,7 @@ class QuantumLatticeGas1D:
         """
         Initialize the localized "density" bump and split into ψL and ψR.
         """
-        rho0 = 0.6 * np.exp(-((self.x - 0.3) / 0.05) ** 2)
+        rho0 = 0.6 * np.exp(-(((self.x - 0.3) / 0.05) ** 2))
         self.psiL = 0.5 * rho0
         self.psiR = 0.5 * rho0
 
@@ -59,16 +63,18 @@ class QuantumLatticeGas1D:
         plt.title("1D Quantum-Lattice-Gas toy (classical sim)")
         plt.show()
 
+
 def qlg_step(psiL, psiR, theta):
     # Collision: unitary rotation (cosθ  sinθ; -sinθ  cosθ)
     c, s = np.cos(theta), np.sin(theta)
-    Lc = c*psiL + s*psiR
-    Rc = -s*psiL + c*psiR
+    Lc = c * psiL + s * psiR
+    Rc = -s * psiL + c * psiR
 
     # Streaming (periodic): left-movers shift left, right-movers shift right
     Ls = np.roll(Lc, +1)  # moves to the left in x
     Rs = np.roll(Rc, -1)  # moves to the right in x
     return Ls, Rs
+
 
 if __name__ == "__main__":
     # Define simulation parameters
